@@ -55,3 +55,59 @@ const posts = [
         "created": "2021-03-05"
     }
 ];
+
+printPosts(posts);
+
+function printPosts(posts) {
+    let structure;
+    for (let i = 0; i < posts.length; i++) {
+        structure += `<div class="post">
+    <div class="post__header">
+        <div class="post-meta">                    
+            <div class="post-meta__icon">`;
+            if(posts[i].author.image != null){
+                structure += `<img class="profile-pic" src="${posts[i].author.image = null ? "CIAONE" : "" + posts[i].author.image + ""}" alt="Phil Mangione">`;
+            }else{
+                const nameSurnameArr = posts[i].author.name.split(" ");
+                structure += `<p>${nameSurnameArr[0][0]+" "+nameSurnameArr[1][0]}</p>`
+            }
+
+        structure += `</div>
+            <div class="post-meta__data">
+                <div class="post-meta__author">${posts[i].author.name}</div>
+                <div class="post-meta__time">${posts[i].created}</div>
+            </div>                    
+        </div>
+    </div>
+    <div class="post__text">${posts[i].content}</div>
+    <div class="post__image">
+        <img src="${posts[i].media}" alt="">
+    </div>
+    <div class="post__footer">
+        <div class="likes js-likes">
+            <div class="likes__cta">
+                <a class="like-button  js-like-button" href="#" data-postid="1">
+                    <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
+                    <span class="like-button__label">Mi Piace</span>
+                </a>
+            </div>
+            <div class="likes__counter">
+                Piace a <b id="like-counter-1" class="js-likes-counter">${posts[i].likes}</b> persone
+            </div>
+        </div> 
+    </div>            
+</div>`;
+    }
+    document.querySelector("#container").innerHTML = structure
+}
+const likeBtns = document.querySelectorAll(".like-button");
+let btn;
+for (let i = 0; i < likeBtns.length; i++) {
+    btn = likeBtns[i];
+    btn.addEventListener("click", () => like(btn))
+}
+
+function like(btn) {
+    console.log("ciaone")
+    btn.classList.add("like-color");
+}
