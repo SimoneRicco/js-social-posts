@@ -65,17 +65,18 @@ function printPosts(posts) {
     <div class="post__header">
         <div class="post-meta">                    
             <div class="post-meta__icon">`;
-            if(posts[i].author.image != null){
-                structure += `<img class="profile-pic" src="${posts[i].author.image = null ? "CIAONE" : "" + posts[i].author.image + ""}" alt="Phil Mangione">`;
-            }else{
-                const nameSurnameArr = posts[i].author.name.split(" ");
-                structure += `<p>${nameSurnameArr[0][0]+" "+nameSurnameArr[1][0]}</p>`
-            }
+            //profile image check
+        if (posts[i].author.image != null) {
+            structure += `<img class="profile-pic" src="${posts[i].author.image = null ? "CIAONE" : "" + posts[i].author.image + ""}" alt="Phil Mangione">`;
+        } else {
+            const nameSurnameArr = posts[i].author.name.split(" ");
+            structure += `<p>${nameSurnameArr[0][0] + " " + nameSurnameArr[1][0]}</p>`
+        }
 
         structure += `</div>
             <div class="post-meta__data">
                 <div class="post-meta__author">${posts[i].author.name}</div>
-                <div class="post-meta__time">${posts[i].created}</div>
+                <div class="post-meta__time">${revertData(posts[i].created)}</div>
             </div>                    
         </div>
     </div>
@@ -92,7 +93,7 @@ function printPosts(posts) {
                 </a>
             </div>
             <div class="likes__counter">
-                Piace a <b id="like-counter-1" class="js-likes-counter">${posts[i].likes}</b> persone
+                Piace a <b id="like-counter-${i + 1}" class="js-likes-counter">${posts[i].likes}</b> persone
             </div>
         </div> 
     </div>            
@@ -105,9 +106,30 @@ for (let i = 0; i < likeBtns.length; i++) {
     likeBtns[i].addEventListener("click", () => like(likeBtns[i]))
 }
 const idLiked = [];
+
 function like(btn) {
-    console.log("ciaone")
-    btn.classList.add("like-color");
-    idLiked.push(parseInt(btn.dataset.postid));
-    console.log(idLiked);
+    const btnId = parseInt(btn.dataset.postid);
+    if (idLiked.includes(btnId)) {
+        btn.classList.remove("like-color");
+        const index = idLiked.indexOf(btnId);
+        idLiked.splice(index, 1);
+        increment(btnId, false);
+    } else {
+        btn.classList.add("like-color");
+        idLiked.push(btnId)
+        increment(btnId, true);
+    }
+}
+function increment(id, increment) {//like number
+    const value = document.querySelector("#like-counter-" + id);
+    if (increment) {
+        value.innerHTML++;
+    } else {
+        value.innerHTML--;
+    }
+}
+function revertData(toRevert) {
+    const arr = toRevert.split("-");
+    arr.reverse();
+    return arr[0] + "-" + arr[1] + "-" + arr[2];
 }
