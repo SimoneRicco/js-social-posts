@@ -59,7 +59,7 @@ const posts = [
 printPosts(posts);
 
 function printPosts(posts) {
-    let structure;
+    let structure = "";
     for (let i = 0; i < posts.length; i++) {
         structure += `<div class="post">
     <div class="post__header">
@@ -111,8 +111,7 @@ function like(btn) {
     const btnId = parseInt(btn.dataset.postid);
     if (idLiked.includes(btnId)) {
         btn.classList.remove("like-color");
-        const index = idLiked.indexOf(btnId);
-        idLiked.splice(index, 1);
+        idLiked.splice(idLiked.indexOf(btnId), 1);
         increment(btnId, false);
     } else {
         btn.classList.add("like-color");
