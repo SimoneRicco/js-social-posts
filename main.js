@@ -86,7 +86,7 @@ function printPosts(posts) {
     <div class="post__footer">
         <div class="likes js-likes">
             <div class="likes__cta">
-                <a class="like-button  js-like-button" href="#" data-postid="1">
+                <a class="like-button  js-like-button" href="javascript:void(0)" data-postid="${posts[i].id}">
                     <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                     <span class="like-button__label">Mi Piace</span>
                 </a>
@@ -101,13 +101,13 @@ function printPosts(posts) {
     document.querySelector("#container").innerHTML = structure
 }
 const likeBtns = document.querySelectorAll(".like-button");
-let btn;
 for (let i = 0; i < likeBtns.length; i++) {
-    btn = likeBtns[i];
-    btn.addEventListener("click", () => like(btn))
+    likeBtns[i].addEventListener("click", () => like(likeBtns[i]))
 }
-
+const idLiked = [];
 function like(btn) {
     console.log("ciaone")
     btn.classList.add("like-color");
+    idLiked.push(parseInt(btn.dataset.postid));
+    console.log(idLiked);
 }
